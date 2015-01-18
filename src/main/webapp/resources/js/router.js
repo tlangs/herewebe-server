@@ -21,16 +21,16 @@ App.Router = Backbone.Router.extend({
 
     initialize: function() {
         $.when(
-            $.get('templates/homeTemplate.html').done(_.bind(function (response) {
+            $.get('resources/templates/homeTemplate.html').done(_.bind(function (response) {
                 this.views.homeView.template = _.template(response);
             }, this)),
-            $.get('templates/aboutTemplate.html').done(_.bind(function (response) {
+            $.get('resources/templates/aboutTemplate.html').done(_.bind(function (response) {
                 this.views.aboutView.template = _.template(response);
             }, this)),
-            $.get('templates/workTemplate.html').done(_.bind(function (response) {
+            $.get('resources/templates/workTemplate.html').done(_.bind(function (response) {
                 this.views.workView.template = _.template(response);
             }, this)),
-            $.get('templates/soylent/soylentTemplate.html').done(_.bind(function (response) {
+            $.get('resources/templates/soylent/soylentTemplate.html').done(_.bind(function (response) {
                 this.views.soylentView.template = _.template(response);
             }, this))
 

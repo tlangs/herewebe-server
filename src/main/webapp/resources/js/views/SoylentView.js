@@ -22,25 +22,25 @@ App.SoylentView = Backbone.View.extend({
 
     initialize: function () {
         $.when(
-            $.get('templates/soylent/intro.html').done(_.bind(function (response) {
+            $.get('resources/templates/soylent/intro.html').done(_.bind(function (response) {
                 this.pages.introTemplate = _.template(response);
             }, this)),
-            $.get('templates/soylent/day1.html').done(_.bind(function (response) {
+            $.get('resources/templates/soylent/day1.html').done(_.bind(function (response) {
                 this.pages.day1Template = _.template(response);
             }, this)),
-            $.get('templates/soylent/day2.html').done(_.bind(function (response) {
+            $.get('resources/templates/soylent/day2.html').done(_.bind(function (response) {
                 this.pages.day2Template = _.template(response);
             }, this)),
-            $.get('templates/soylent/day3.html').done(_.bind(function (response) {
+            $.get('resources/templates/soylent/day3.html').done(_.bind(function (response) {
                 this.pages.day3Template = _.template(response);
             }, this)),
-            $.get('templates/soylent/day4.html').done(_.bind(function (response) {
+            $.get('resources/templates/soylent/day4.html').done(_.bind(function (response) {
                 this.pages.day4Template = _.template(response);
             }, this)),
-            $.get('templates/soylent/days5-6.html').done(_.bind(function (response) {
+            $.get('resources/templates/soylent/days5-6.html').done(_.bind(function (response) {
                 this.pages.day5_6Template = _.template(response);
             }, this)),
-            $.get('templates/soylent/day7.html').done(_.bind(function (response) {
+            $.get('resources/templates/soylent/day7.html').done(_.bind(function (response) {
                 this.pages.day7Template = _.template(response);
             }, this))
         ).done(_.bind(function () {

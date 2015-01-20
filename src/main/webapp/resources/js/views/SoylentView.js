@@ -51,7 +51,7 @@ App.SoylentView = Backbone.View.extend({
     render: function () {
         this.$el.html(this.template());
         while (this.pages.introTemplate == '' &&
-            this.pages.day1Template == '') {
+        this.pages.day1Template == '') {
         }
         this.renderByURL();
         this.highlightPaginator();
@@ -68,12 +68,12 @@ App.SoylentView = Backbone.View.extend({
             case "previous":
                 pagenum = this.getParameterByName('page');
                 App.router.navigate("soylent?page=" +
-                    (parseInt(pagenum) - 1), {trigger: true});
+                (parseInt(pagenum) - 1), {trigger: true});
                 break;
             case "next":
                 pagenum = this.getParameterByName('page');
                 App.router.navigate("soylent?page=" +
-                    (parseInt(pagenum) + 1), {trigger: true});
+                (parseInt(pagenum) + 1), {trigger: true});
                 break;
             default:
                 App.router.navigate("soylent?page=" + $(event.target).data('page'), {trigger: true});
@@ -137,7 +137,6 @@ App.SoylentView = Backbone.View.extend({
             $('#soylentPaginator li a[data-page=next]').parent().addClass('disabled')
         }
     }
-
 
 
 });

@@ -32,4 +32,10 @@ public class HomeController {
         mav.addObject("viewName", "work");
         return mav;
     }
+
+    @RequestMapping(value = "/soylent")
+    public ModelAndView soylent() {
+        ModelAndView mav = new ModelAndView("soylent");
+        return mav;
+    }
 }

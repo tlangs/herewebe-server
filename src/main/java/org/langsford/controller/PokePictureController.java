@@ -21,6 +21,7 @@ import java.util.List;
  * Created by trevyn on 1/11/15.
  */
 @Controller
+@RequestMapping("/poke")
 public class PokePictureController {
 
     private Map<String, int[]> regions;
@@ -92,7 +93,7 @@ public class PokePictureController {
     }
 
 
-    @RequestMapping(value = "/poke", method = RequestMethod.GET, produces = "image/png")
+    @RequestMapping(method = RequestMethod.GET, produces = "image/png")
     @ResponseBody
     public byte[] greeting(@RequestParam(value = "name", required = true, defaultValue = "") String name,
                            @RequestParam(value = "pokemon", required = true, defaultValue = "") String pokemon,
@@ -240,7 +241,6 @@ public class PokePictureController {
                 break;
             }
         }
-        lineStart = lineEnd + 1;
         for (lineStart = lineEnd + 1; lineStart < image.getHeight(); lineStart++) {
             boolean stop = false;
             for (int column = 0; column < image.getWidth(); column++) {

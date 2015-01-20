@@ -13,8 +13,23 @@ import org.springframework.web.servlet.ModelAndView;
 public class HomeController {
 
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home() {
-        return "home";
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView home() {
+        ModelAndView mav = new ModelAndView("home");
+        mav.addObject("viewName", "home");
+        return mav;    }
+
+    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    public ModelAndView about() {
+        ModelAndView mav = new ModelAndView("about");
+        mav.addObject("viewName", "about");
+        return mav;
+    }
+
+    @RequestMapping(value = "/work", method = RequestMethod.GET)
+    public ModelAndView work() {
+        ModelAndView mav = new ModelAndView("work");
+        mav.addObject("viewName", "work");
+        return mav;
     }
 }

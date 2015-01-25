@@ -28,7 +28,7 @@
 <div class="container">
   <h1>Welcome to my website!</h1>
 
-  <%--<h3><a href="#soylent">Click here to read my account of my week on Soylent!</a></h3>--%>
+  <h3><a href="soylent">Click here to read my account of my week on Soylent!</a></h3>
   <p>I'm currently writing my online enclave using Javascript, Backbone.js, and Twitter Bootstrap.
     This site is under a lot of construction, but there will definitely be more content to come.
     In the meantime, please enjoy this picture of Boston in the summer.</p>
@@ -43,22 +43,6 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script type="text/javascript" src="../../resources/js/libs/bootstrap.min.js"></script>
-<%--<script type="text/javascript" src="../../resources/js/libs/underscore/underscore-min.js"></script>--%>
-<%--<script type="text/javascript" src="../../resources/js/libs/backbone/backbone-min.js"></script>--%>
-<%--<script type="text/javascript" src="../../resources/js/utils/utils.js"></script>--%>
-
-
-<%--<script type="text/javascript">--%>
-  <%--var App = {};--%>
-
-<%--</script>--%>
-
-
-<%--<script src="../../resources/js/views/AboutView.js"></script>--%>
-<%--<script src="../../resources/js/views/WorkView.js"></script>--%>
-<%--<script src="../../resources/js/views/HomeView.js"></script>--%>
-<%--<script src="../../resources/js/views/SoylentView.js"></script>--%>
-<%--<script src="../../resources/js/router.js"></script>--%>
 
 
 </body>

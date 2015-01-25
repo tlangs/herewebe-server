@@ -5,7 +5,7 @@
 App.Router = Backbone.Router.extend({
 
     routes: {
-        'soylent': 'soylentView'
+        '': 'soylentView'
     },
 
     views: {

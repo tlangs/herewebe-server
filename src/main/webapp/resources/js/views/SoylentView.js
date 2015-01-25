@@ -67,16 +67,16 @@ App.SoylentView = Backbone.View.extend({
         switch ($(event.target).data('page')) {
             case "previous":
                 pagenum = this.getParameterByName('page');
-                App.router.navigate("soylent?page=" +
+                App.router.navigate("?page=" +
                 (parseInt(pagenum) - 1), {trigger: true});
                 break;
             case "next":
                 pagenum = this.getParameterByName('page');
-                App.router.navigate("soylent?page=" +
+                App.router.navigate("?page=" +
                 (parseInt(pagenum) + 1), {trigger: true});
                 break;
             default:
-                App.router.navigate("soylent?page=" + $(event.target).data('page'), {trigger: true});
+                App.router.navigate("?page=" + $(event.target).data('page'), {trigger: true});
                 break;
         }
 
@@ -108,7 +108,7 @@ App.SoylentView = Backbone.View.extend({
                 break;
             default:
                 container.html(this.pages.introTemplate);
-                App.router.navigate("soylent?page=0");
+                App.router.navigate("?page=0");
         }
     },
 

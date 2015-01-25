@@ -12,17 +12,22 @@
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Trevyn Langsford</a>
+      <span class="navbar-brand">Trevyn Langsford</span>
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav" id="nav-buttons">
-        <li <c:if test='${viewName == "home"}'>class="active"</c:if>><a href="/">Home</a></li>
-        <li <c:if test='${viewName == "about"}'>class="active"</c:if>><a href="/about">About</a></li>
-        <li <c:if test='${viewName == "work"}'>class="active"</c:if>><a href="/work">Work</a></li>
+        <li <c:if test='${viewName == "home"}'>class="active"</c:if>><a href="${pageContext.request.contextPath}/">Home</a></li>
+        <li <c:if test='${viewName == "about"}'>class="active"</c:if>><a href="${pageContext.request.contextPath}/about">About</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Projects <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="${pageContext.request.contextPath}/soylent">Soylent</a></li>
+            <li><a href="${pageContext.request.contextPath}/poke">Personal Pokemon</a></li>
+            <li class="divider"></li>
+            <li><a href="https://github.com/tlangs">GitHub</a></li>
+          </ul>
+        </li>
       </ul>
     </div>
   </div>

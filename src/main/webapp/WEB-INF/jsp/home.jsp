@@ -35,15 +35,5 @@
 
   <img src="resources/images/boston-skyline.jpg" class="img-responsive img-rounded">
 </div>
-
-
-
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script type="text/javascript" src="../../resources/js/libs/bootstrap.min.js"></script>
-
-
 </body>
 </html>

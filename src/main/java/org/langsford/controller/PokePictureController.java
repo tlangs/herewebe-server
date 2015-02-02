@@ -95,7 +95,7 @@ public class PokePictureController {
 
     @RequestMapping(method = RequestMethod.GET, produces = "image/png")
     @ResponseBody
-    public byte[] greeting(@RequestParam(value = "name", required = true, defaultValue = "") String name,
+    public byte[] pokeImage(@RequestParam(value = "name", required = true, defaultValue = "") String name,
                            @RequestParam(value = "pokemon", required = true, defaultValue = "") String pokemon,
                            @RequestParam(value = "regions", required = true, defaultValue = "") String regions) {
 

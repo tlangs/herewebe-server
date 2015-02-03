@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link href="../../resources/css/bootstrap.css" rel="stylesheet">
-<link href="../../resources/css/starter-template.css" rel="stylesheet">
+<%--<link href="../../resources/css/starter-template.css" rel="stylesheet">--%>
 <link href="../../resources/css/custom.css" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->

@@ -107,7 +107,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/poke/poke.js"></script>
+<script type="text/javascript" src="/resources/js/poke/poke.js"></script>
 <jsp:include page="parts/footer.jsp"/>
 </body>
 </html>

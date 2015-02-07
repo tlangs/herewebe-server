@@ -38,17 +38,17 @@
             pages. My server is currently hosted by DigitalOcean, which means if they're having problems, so am I.
         </p>
     </div>
-    <div>
+    <div>s
         <h1>Contact</h1>
 
         <p>You can <a href="mailto:tlangsford@gmail.com">email me</a> to get in touch.
             I also have a <a href="https://www.linkedin.com/pub/trevyn-langsford/56/810/a80">LinkedIn</a> account,
             and I've been known to <a href="https://twitter.com/tlangsford">tweet</a> occasionally.
             If you'd like to establish a secure communication with me, you can
-            <a href="resources/files/public-F433B841.asc">download my public key here</a>.
+            <a href="resources/fiaboutles/public-F433B841.asc">download my public key here</a>.
         </p>
     </div>
 </div>
-
+<jsp:include page="parts/footer.jsp"/>
 </body>
 </html>

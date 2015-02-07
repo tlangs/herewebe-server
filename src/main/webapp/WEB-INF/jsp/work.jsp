@@ -16,6 +16,8 @@
 <div class="container">
   <h1>Work</h1>
   <h4>This needs some work. You can check out my <a href="https://github.com/tlangs">GitHub Repo</a> in the meantime.</h4>
+
 </div>
+<jsp:include page="parts/footer.jsp"/>
 </body>
 </html>

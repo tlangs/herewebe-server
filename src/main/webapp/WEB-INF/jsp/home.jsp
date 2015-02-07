@@ -37,5 +37,6 @@
 
     <img src="resources/images/boston-skyline.jpg" class="img-responsive img-rounded">
 </div>
+<jsp:include page="parts/footer.jsp"/>
 </body>
 </html>

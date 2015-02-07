@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: trevyn
@@ -9,16 +10,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <!--<link rel="shortcut icon" href="../../assets/ico/favicon.ico">-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="shortcut icon" href="../../assets/ico/favicon.ico">-->
 
-  <title>Trevyn Langsford</title>
+    <title>Trevyn Langsford</title>
 
-  <jsp:include page="parts/resources.jsp"/>
+    <jsp:include page="parts/resources.jsp"/>
 </head>
 
 <body>
@@ -26,14 +27,87 @@
 <jsp:include page="parts/header.jsp"/>
 
 <div class="container">
-  <h1>Pokemon Name Generator</h1>
+    <h1 class="page-header">Personal Pokemon Sprites</h1>
 
-  <h3><a href="soylent">Click here to read my account of my week on Soylent!</a></h3>
-  <p>I'm currently writing my online enclave using Javascript, Backbone.js, and Twitter Bootstrap.
-    This site is under a lot of construction, but there will definitely be more content to come.
-    In the meantime, please enjoy this picture of Boston in the summer.</p>
+    <div class="row">
+        <div class="col-sm-4">
+            <form>
+                <input style="display: none;" id="maybe">
 
-  <img src="resources/images/boston-skyline.jpg" class="img-responsive img-rounded">
+                <div class="form-group">
+                    <label class="control-label" for="inputText">Text</label>
+                    <input type="text" class="form-control" id="inputText">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="inputPokemon">Pokemon Name</label>
+                    <select class="form-control" id="inputPokemon" data-placeholder="Leave blank for random">
+                        <option value=""></option>
+                        <option value="">Random Pokemon</option>
+                        <c:forEach var="pokemon" items="${pokemonList}">
+                            <option value="${pokemon.getValue()}">${pokemon.getName()}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="row" id="regionSelection">
+                    <div class="col-sm-6">
+                        <label class="radio-inline">
+                            <input type="radio" name="regionOptions" id="allRegionsRadio" value="allRegions" checked>
+                            All Regions
+                        </label>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="radio-inline">
+                            <input type="radio" name="regionOptions" id="pickRegionsRadio" value="pickRegions"> Choose
+                            Regions
+                        </label>
+
+                        <div class="form-group" id="regions">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="kanto" disabled> Kanto
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="johto" disabled> Johto
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="hoenn" disabled> Hoenn
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="sinnoh" disabled> Sinnoh
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="unova" disabled> Unova
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="kalos" disabled> Kalos
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="submitPokeForm" class="btn btn-primary btn-block pull-right">Submit</button>
+                <br><br>
+                <div class="alert alert-info" role="alert">Mega evolutions and alternate forms are not currently
+                    supported and will be reverted to their regular sprite. Some pokemon may result in MissingNo.
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-8">
+            <img class="img-responsive center-block" style="padding: 1em;" id="outputImg" src=""/>
+        </div>
+    </div>
 </div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/poke/poke.js"></script>
+<jsp:include page="parts/footer.jsp"/>
 </body>
 </html>

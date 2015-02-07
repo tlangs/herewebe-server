@@ -16,13 +16,8 @@
 <div class="container" id="view-main">
 
 </div>
+<jsp:include page="parts/footer.jsp"/>
 </body>
-
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script type="text/javascript" src="../../resources/js/libs/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../resources/js/libs/underscore/underscore-min.js"></script>
-<script type="text/javascript" src="../../resources/js/libs/backbone/backbone-min.js"></script>
-<script type="text/javascript" src="../../resources/js/utils/utils.js"></script>
 
 
 <script type="text/javascript">

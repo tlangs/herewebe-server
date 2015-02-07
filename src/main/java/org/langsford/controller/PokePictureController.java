@@ -1,19 +1,23 @@
 package org.langsford.controller;
 
+import org.apache.commons.lang3.text.WordUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.langsford.dto.Pokemon;
+import org.langsford.dto.PokemonDisplay;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.nio.Buffer;
 import java.util.*;
 import java.util.List;
 
@@ -26,7 +30,7 @@ public class PokePictureController {
 
     private Map<String, int[]> regions;
     private Map<String, Pokemon> pokemonNameMap = new HashMap<>();
-    private Map<Integer, Pokemon> pokemonIdMap = new HashMap<>();
+    private TreeMap<Integer, Pokemon> pokemonIdMap = new TreeMap<>();
     private Map<String, Pokemon> pokeCache = new HashMap<>();
     private Font font;
     private BufferedImage missingNo;
@@ -92,22 +96,41 @@ public class PokePictureController {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView pokePage() {
+        ModelAndView mav = new ModelAndView("poke");
+        List<PokemonDisplay> pokeNames = new ArrayList<>();
+        for (Map.Entry<Integer, Pokemon> entry : this.pokemonIdMap.entrySet()) {
+            PokemonDisplay pd = new PokemonDisplay();
+//            if (entry.getValue().getName().contains("-")) continue;
+            pd.setName(WordUtils.capitalize(entry.getValue().getName(), ' ', '-'));
+            pd.setValue(entry.getValue().getName());
+            pokeNames.add(pd);
+        }
+        mav.addObject("pokemonList", pokeNames);
+        return mav;
+    }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "image/png")
+
+    @RequestMapping(value = "/makepokemon", method = RequestMethod.GET, produces = "image/png")
     @ResponseBody
     public byte[] pokeImage(@RequestParam(value = "name", required = true, defaultValue = "") String name,
-                           @RequestParam(value = "pokemon", required = true, defaultValue = "") String pokemon,
-                           @RequestParam(value = "regions", required = true, defaultValue = "") String regions) {
+                            @RequestParam(value = "pokemon", required = true, defaultValue = "") String pokemon,
+                            @RequestParam(value = "regions", required = true, defaultValue = "") String regions) {
 
         Pokemon retrievedPokemon;
         BufferedImage retrievedSprite;
+        pokemon = pokemon.toLowerCase().trim();
         if ((retrievedPokemon = this.pokeCache.get(pokemon)) == null) {
             retrievedPokemon = this.getPokemon(pokemon, regions);
-
+        }
+        if (retrievedPokemon != null && retrievedPokemon.getNationalId() > 10000) {
+            return pokeImage(name, pokemon.split("-")[0], regions);
         }
         if (retrievedPokemon == null) {
             retrievedSprite = this.missingNo;
-        } else {
+        }
+        else {
             retrievedSprite = this.getSprite(retrievedPokemon);
         }
         if (retrievedPokemon != null && retrievedSprite != null && !this.pokeCache.containsKey(pokemon)) {
@@ -198,7 +221,7 @@ public class PokePictureController {
         g.fillRect(0, 0, image.getWidth(), image.getHeight());
         g.drawImage(sprite, 25, 0, sprite.getWidth() * 3, sprite.getHeight() * 3, null);
         g.setColor(Color.BLACK);
-        int rgb = image.getRGB(1,1);
+        int rgb = image.getRGB(1, 1);
 
         g.setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -206,14 +229,82 @@ public class PokePictureController {
         int fontht = fontMetrics.getHeight();
         g.drawString(name, 50, (bottomOfSprite * 3) + fontht);
         g.dispose();
-        int bottomOfText = this.getBottomOfText(image);
-        if (name.equals("")) {
-            image = image.getSubimage(0, 0, image.getWidth(), sprite.getHeight() * 3);
-        } else {
-            image = image.getSubimage(0, 0, image.getWidth(), bottomOfText + 25);
 
+        return cropOutWhitespace(image);
+    }
+
+    private BufferedImage cropOutWhitespace(BufferedImage image) {
+        int firstCol = firstColumnOfImage(image);
+        int firstRow = firstRowOfImage(image);
+        int lastCol = lastColumnOfImage(image);
+        int lastRow = lastRowOfImage(image);
+
+        return image.getSubimage(firstCol, firstRow, lastCol - firstCol, lastRow - firstRow);
+    }
+
+
+    private int firstRowOfImage(BufferedImage image) {
+        int lineStart;
+        for (lineStart = 0; lineStart < image.getHeight(); lineStart++) {
+            boolean stop = false;
+            for (int column = 0; column < image.getWidth(); column++) {
+                if (image.getRGB(column, lineStart) != -1) {
+                    stop = true;
+                    break;
+                }
+            }
+            if (stop) {
+                break;
+            }
         }
-        return image;
+        return lineStart;
+    }
+
+    private int lastRowOfImage(BufferedImage image) {
+        int lineEnd;
+        for (lineEnd = image.getHeight() - 1; lineEnd > 0; lineEnd--) {
+            boolean stop = false;
+            for (int column = 0; column < image.getWidth(); column++) {
+                if (image.getRGB(column, lineEnd) != -1) {
+                    stop = true;
+                    break;
+                }
+            }
+            if (stop) {
+                break;
+            }
+        }
+        return lineEnd + 1;
+    }
+
+    private int firstColumnOfImage(BufferedImage image) {
+        int columnStart;
+        for (columnStart = 0; columnStart < image.getWidth(); columnStart++) {
+            boolean stop = false;
+            for (int row = 0; row < image.getHeight(); row++) {
+                if (image.getRGB(columnStart, row) != -1) {
+                    stop = true;
+                    break;
+                }
+            }
+            if (stop) break;
+        }
+        return columnStart;
+    }
+
+    private int lastColumnOfImage(BufferedImage image) {
+        int columnEnd;
+        for (columnEnd = image.getWidth() - 1; columnEnd > 0; columnEnd--) {
+            boolean stop = false;
+            for (int row = 0; row < image.getHeight(); row++) {
+                if (image.getRGB(columnEnd, row) != -1) {
+                    stop = true;
+                    break;
+                }
+            }
+            if (stop) break;
+        }
+        return columnEnd + 1;
     }
 
     private int getBottomOfText(BufferedImage image) {

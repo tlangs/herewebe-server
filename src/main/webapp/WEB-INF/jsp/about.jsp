@@ -38,7 +38,7 @@
             pages. My server is currently hosted by DigitalOcean, which means if they're having problems, so am I.
         </p>
     </div>
-    <div>s
+    <div>
         <h1>Contact</h1>
 
         <p>You can <a href="mailto:tlangsford@gmail.com">email me</a> to get in touch.

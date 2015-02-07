@@ -35,7 +35,7 @@
         <p>
             This site is built using Twitter Bootstrap and Backbone.js, both of which I love for making my website more
             than just a pile of spaghetti code. On the server side, I've made a little Spring application serving up JSP
-            pages. My server is currently hosted by DigitalOcean, so if they're having problems, so am I.
+            pages. My server is currently hosted by DigitalOcean, which means if they're having problems, so am I.
         </p>
     </div>
     <div>

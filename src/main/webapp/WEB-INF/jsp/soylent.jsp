@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <jsp:include page="parts/meta.jsp"/>
     <title>A Journey in Soylent</title>
     <jsp:include page="parts/resources.jsp"/>
 </head>

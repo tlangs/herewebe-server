@@ -5,21 +5,26 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.langsford.dto.Pokemon;
 import org.langsford.dto.PokemonDisplay;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.Response;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
-import java.nio.Buffer;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Created by trevyn on 1/11/15.
@@ -77,7 +82,8 @@ public class PokePictureController {
 
         try {
 
-            this.font = Font.createFont(Font.TRUETYPE_FONT, PokePictureController.class.getResourceAsStream("/fonts/PokemonSolid.ttf"));
+            this.font = Font.createFont(Font.TRUETYPE_FONT,
+                    PokePictureController.class.getResourceAsStream("/fonts/PokemonSolid.ttf"));
             this.missingNo = ImageIO.read(PokePictureController.class.getResourceAsStream("/Missingno_RB.png"));
             JSONObject response = getJSON("http://pokeapi.co/api/v1/pokedex/1");
             JSONArray a = response.getJSONArray("pokemon");
@@ -102,13 +108,94 @@ public class PokePictureController {
         List<PokemonDisplay> pokeNames = new ArrayList<>();
         for (Map.Entry<Integer, Pokemon> entry : this.pokemonIdMap.entrySet()) {
             PokemonDisplay pd = new PokemonDisplay();
-//            if (entry.getValue().getName().contains("-")) continue;
             pd.setName(WordUtils.capitalize(entry.getValue().getName(), ' ', '-'));
             pd.setValue(entry.getValue().getName());
             pokeNames.add(pd);
         }
         mav.addObject("pokemonList", pokeNames);
         return mav;
+    }
+
+    @RequestMapping(value="/fileupload", method=RequestMethod.POST, produces = "application/zip")
+    public @ResponseBody byte[] handleFileUpload(@RequestParam("fileUpload") MultipartFile file,
+                                                 HttpServletResponse response) {
+        byte[] output = new byte[0];
+        if (!file.isEmpty()) {
+            try {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+                StringBuilder sb = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+                output = bulkUpload(sb.toString(), response);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        String fileName = file.getOriginalFilename().split("\\.")[0];
+        response.setHeader("Content-Disposition", "filename=" + fileName + ".zip");
+        return output;
+    }
+
+    @RequestMapping(value = "bulkupload", method = RequestMethod.GET, produces = "application/zip")
+    @ResponseBody
+    public byte[] bulkUpload(@RequestParam String bulkInput, HttpServletResponse response) {
+        List<MemoryFile> files = new ArrayList<>();
+        byte[] output = new byte[0];
+        try {
+            JSONArray array = new JSONArray(URLDecoder.decode(bulkInput, "UTF-8"));
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject object = array.getJSONObject(i);
+                String name = object.has("name") ? object.getString("name") : "";
+                String pokemon = object.has("pokemon") ? object.getString("pokemon") : "";
+                String regions = object.has("regions") ? object.getString("regions") : "";
+                byte[] barray = this.pokeImage(name, pokemon, regions);
+                MemoryFile mfile = new MemoryFile();
+                mfile.contents = barray;
+                mfile.fileName = (name.equals("") ? i : name) + ".png";
+                files.add(mfile);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            output = createZipByteArray(files);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        response.setHeader("Content-Disposition", "filename=bulk.zip");
+        return output;
+    }
+
+    private static class MemoryFile {
+        public String fileName;
+        public byte[] contents;
+    }
+
+    private byte[] createZipByteArray(List<MemoryFile> memoryFiles) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream);
+        List<String> filenames = new ArrayList<>();
+        try {
+            for (MemoryFile memoryFile : memoryFiles) {
+                ZipEntry zipEntry;
+                if (!filenames.contains(memoryFile.fileName)) {
+                    zipEntry = new ZipEntry(memoryFile.fileName);
+                } else {
+                    zipEntry = new ZipEntry(
+                            Collections.frequency(filenames, memoryFile.fileName) + memoryFile.fileName
+                    );
+                }
+                filenames.add(memoryFile.fileName);
+                zipOutputStream.putNextEntry(zipEntry);
+                zipOutputStream.write(memoryFile.contents);
+                zipOutputStream.closeEntry();
+            }
+        } finally {
+            zipOutputStream.close();
+        }
+        return byteArrayOutputStream.toByteArray();
     }
 
 
@@ -129,8 +216,7 @@ public class PokePictureController {
         }
         if (retrievedPokemon == null) {
             retrievedSprite = this.missingNo;
-        }
-        else {
+        } else {
             retrievedSprite = this.getSprite(retrievedPokemon);
         }
         if (retrievedPokemon != null && retrievedSprite != null && !this.pokeCache.containsKey(pokemon)) {
@@ -194,7 +280,8 @@ public class PokePictureController {
         try {
             JSONObject pokemonEntry = getJSON("http://pokeapi.co/" + pokemon.getResourceURI());
             JSONArray spritesArray = pokemonEntry.getJSONArray("sprites");
-            JSONObject spriteInfo = getJSON("http://pokeapi.co/" + spritesArray.getJSONObject(0).getString("resource_uri"));
+            JSONObject spriteInfo = getJSON("http://pokeapi.co/" +
+                    spritesArray.getJSONObject(0).getString("resource_uri"));
             image = ImageIO.read(new URL("http://pokeapi.co/" + spriteInfo.getString("image")));
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,30 @@
 $(document).ready(function() {
     $("#inputPokemon").chosen();
-})
+});
+
+$('#bulkUploadForm').submit(function() {
+    if ($("#useFile")[0].checked) {
+        this.action = "poke/fileupload";
+        this.method = "post";
+        this.enctype =  "multipart/form-data";
+    } else {
+        this.action = "poke/bulkupload";
+        this.method = "get";
+        this.enctype = "";
+    }
+    return true;
+});
+
+$("#useFile").click(function() {
+    if (this.checked) {
+        $("#bulkInput").prop("disabled", true);
+        $("#fileUpload").prop("disabled", false);
+    } else {
+        $("#bulkInput").prop("disabled", false);
+        $("#fileUpload").prop("disabled", true);
+    }
+});
+
 
 $("#submitPokeForm").click(function() {
     var regions = "";

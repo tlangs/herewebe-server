@@ -40,13 +40,10 @@
         <!-- Tab panes -->
         <div class="tab-content">
             <br>
-
             <div role="tabpanel" class="tab-pane fade in active" id="webapp">
                 <div class="row">
                     <div class="col-sm-4">
                         <form>
-                            <input style="display: none;" id="maybe">
-
                             <div class="form-group">
                                 <label class="control-label" for="inputText">Text:</label>
                                 <input type="text" class="form-control" id="inputText">

@@ -135,7 +135,7 @@
                         <div id="instructionsWell" class="well">
                             <p>
                                 Here is an example of what the server can parse. The first one provides both a name and
-                                a pokemon, and the second one provides a name and regions. A random pokemon is selected
+                                a pokemon, while the second one provides a name and regions. A random pokemon is selected
                                 from the regions provided, which are comma-separated. If the same name is provided more
                                 than one, a number will be prepended to the file name to differentiate the files.
                             </p>

@@ -11,6 +11,7 @@
 <head>
 
     <jsp:include page="parts/meta.jsp"/>
+    <meta name="description" content="The personal website of Trevyn Langsford">
 
     <title>Trevyn Langsford</title>
 

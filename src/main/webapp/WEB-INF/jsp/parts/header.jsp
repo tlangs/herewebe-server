@@ -23,13 +23,13 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li <c:if test='${viewName == "home"}'>class="active"</c:if>><a href="/">Home</a></li>
-                <li <c:if test='${viewName == "about"}'>class="active"</c:if>><a href="/about">About</a></li>
+                <li <c:if test='${viewName == "home"}'>class="active"</c:if>><a href="${pageContext.request.contextPath}/">Home</a></li>
+                <li <c:if test='${viewName == "about"}'>class="active"</c:if>><a href="${pageContext.request.contextPath}/about">About</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Projects <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="/soylent">Soylent</a></li>
-                        <li><a href="/poke">Personal Pokemon Sprites</a></li>
+                        <li><a href="${pageContext.request.contextPath}/soylent">Soylent</a></li>
+                        <li><a href="/pokepics">Personal Pokemon Sprites</a></li>
                         <li class="divider"></li>
                         <li><a href="https://github.com/tlangs">GitHub</a></li>
                     </ul>

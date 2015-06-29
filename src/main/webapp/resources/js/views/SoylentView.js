@@ -16,7 +16,8 @@ App.SoylentView = Backbone.View.extend({
         day3Template: '',
         day4Template: '',
         day5_6Template: '',
-        day7Template: ''
+        day7Template: '',
+        conclusionTemplate: ''
     },
 
 
@@ -42,6 +43,9 @@ App.SoylentView = Backbone.View.extend({
             }, this)),
             $.get('resources/templates/soylent/day7.html').done(_.bind(function (response) {
                 this.pages.day7Template = _.template(response);
+            }, this)),
+            $.get('resources/templates/soylent/conclusion.html').done(_.bind(function (response) {
+                this.pages.conclusionTemplate = _.template(response);
             }, this))
         ).done(_.bind(function () {
             }, this));
@@ -105,6 +109,9 @@ App.SoylentView = Backbone.View.extend({
                 break;
             case 6:
                 container.html(this.pages.day7Template());
+                break;
+            case 7:
+                container.html(this.pages.conclusionTemplate());
                 break;
             default:
                 container.html(this.pages.introTemplate);

@@ -29,7 +29,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Projects <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="${pageContext.request.contextPath}/soylent">Soylent</a></li>
-                        <li><a href="/pokepics">Personal Pokemon Sprites</a></li>
+						<!--<li><a href="/pokepics">Personal Pokemon Sprites</a></li>-->
                         <li class="divider"></li>
                         <li><a href="https://github.com/tlangs">GitHub</a></li>
                     </ul>

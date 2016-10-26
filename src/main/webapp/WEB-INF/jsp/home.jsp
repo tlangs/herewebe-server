@@ -25,11 +25,9 @@
 <div class="container">
     <h1>Welcome to my website!</h1>
 
-    <p>To see some of the stuff I've made, check out the Projects menu.</p>
+    <p>To see some of the stuff I've made, check out the Projects menu. An API that I used recently changed, the menu's a bit barren right now.</p>
 
-    <p>I'm currently writing my online enclave using Javascript, Backbone.js, and Twitter Bootstrap.
-        This site is under a lot of construction, but there will definitely be more content to come.
-        In the meantime, please enjoy this picture of Boston in the summer.</p>
+    <p>Its starting to get cold again, so here's a picture of Boston in the summer to remind you that warm weather is just one winter away.</p>
 
 
     <img src="resources/images/boston-skyline.jpg" class="img-responsive img-rounded">
